@@ -2,10 +2,10 @@
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-section about">
+          <strong>Andrea Camargo Ruiz</strong><br>
+          <strong>Desarrolladora Full Stack Junior</strong><br>
           <h4>KuboMovies</h4>
           <p>&copy; 2024 KuboMovies. Todos los derechos reservados.</p>
-          <strong>Andrea Camargo Ruiz</strong><br>
-          <strong>Desarrolladora Full Stack Junior</strong>
           <div class="social-icons">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
               <i class="pi pi-facebook"></i>
@@ -46,7 +46,7 @@
     background-color: var(--p-toolbar-background);
     color: #9e9e9e;
     text-align: center;
-    font-family: sans-serif;
+    font-family: 'Roboto';
     border: 1px solid var(--p-toolbar-border-color);
     border-radius: 11px;
 

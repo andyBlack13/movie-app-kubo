@@ -23,7 +23,7 @@ import NavBar from './components/nav-bar.vue';
 <style scoped>
 
   body {
-    font-family: sans-serif;
+    font-family: 'Roboto';
   }
 
   main {

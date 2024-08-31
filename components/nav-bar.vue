@@ -1,6 +1,6 @@
 <!-- de Primevue-->
 <template>
-    <div class="card">
+    <div>
         <Toolbar style="border-radius: 3rem; padding: 1rem 1rem 1rem 1.5rem">
             <template #start>
                 <div class="c-flex items-center gap-2">
@@ -15,52 +15,104 @@
                             fill="transparent"
                         />
                     </svg>
-                    <nuxt-link to="/" class="p-button p-component p-button-text p-button-plain link">
-                        <Button label="Películas" text plain />
-                    </nuxt-link>
-                    <Button label="Populares" text plain />
-                    <Button label="Sobre nosotros" text plain />
+                            
+                    <!-- mostrar el boton solo en pantallas pequeñas -->
+                    <Button v-if="isMobile" class="button-menu" @click="toggleOverlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect y="4" width="24" height="2" fill="#515151"/>
+                            <rect y="11" width="24" height="2" fill="#515151"/>
+                            <rect y="18" width="24" height="2" fill="#515151"/>
+                        </svg>
+                    </Button>
+                    <OverlayPanel ref="overlay" class="custom-overlay" v-if="isMobile">
+                        <div class="menu-items">
+                            <nuxt-link to="/" class="p-button p-component p-button-text p-button-plain link">
+                            <Button label="Películas" text plain />
+                            </nuxt-link>
+                            <Button label="Populares" text plain />
+                            <Button label="Sobre nosotros" text plain />
+                            <Button label="Cerrar sesión" text plain />
+                        </div>
+                    </OverlayPanel>
+        
+                    <!-- mostrar el menu en pantallas grandes -->
+                    <div v-else class="menu-items">
+                        <nuxt-link to="/" class="p-button p-component p-button-text p-button-plain link">
+                            <Button label="Películas" text plain />
+                        </nuxt-link>
+                        <Button label="Populares" text plain />
+                        <Button label="Sobre nosotros" text plain />
+                    </div>
                 </div>
             </template>
-
+    
             <template #end>
                 <div class="c-flex items-center gap-2">
-                    <Button label="Cerrar sesión" severity="contrast" size="small" />
+                    <Button v-if="!isMobile" label="Cerrar sesión" severity="contrast" size="small" style="font-family: 'Roboto'" />
                     <Avatar class="c-avatar" image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 40px; height: 40px" />
                 </div>
             </template>
         </Toolbar>
     </div>
 </template>
-
+  
 <script setup>
+    import { ref, onMounted } from 'vue';
+    
+    const isMobile = ref(false);
+    const overlay = ref(null);
+    
+    const handleResize = () => {
+        isMobile.value = window.innerWidth <= 833;
+    };
+    
+    const toggleOverlay = (event) => {
+        if (overlay.value) {
+            overlay.value.toggle(event);
+        }
+    };
+    
+    onMounted(() => {
+        window.addEventListener('resize', handleResize);
+        handleResize();
+    });
 </script>
-
+  
 <style scoped>
-    .toolbar-start {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .toolbar-end {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
     .c-flex {
         display: flex;
+        align-items: center;
+        gap: 1rem;
     }
-
-    .c-avatar {
-        margin: 1px 0px 1px 0.8em;
+    
+    .custom-overlay .menu-items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        font-family: 'Roboto';
     }
-    .title {
-        margin-right: 10px;
+    
+    .menu-items {
+        display: flex;
+        gap: 1rem;
+        font-family: 'Roboto';
     }
-
+    
     .link {
         text-decoration: none;
     }
+
+    .button-menu {
+        background: #121212;
+        width: 3em;
+        border: 1px solid #414141;
+    }
+
+    .button-menu:active,
+    .button-menu:focus {
+        background: #121212;
+        border-color: #414141;
+        outline: none;
+    }
 </style>
+  
